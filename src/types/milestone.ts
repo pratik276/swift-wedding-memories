@@ -6,7 +6,7 @@ export interface Milestone {
   description: string;
   image: string;
   position: {
-    x: number;
-    y: number;
+    x: number; // percentage position from left
+    y: number; // percentage position from top
   };
 }
