@@ -160,10 +160,11 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
           onClick={() => handleOpenMilestone(milestone)}
         >
           {milestone.id === 5 ? (
-            // "X" marks the spot for the final milestone (wedding)
+            // Special marker for the wedding milestone (removed red box)
             <div className="w-14 h-14 flex items-center justify-center relative">
-              <div className="absolute w-14 h-14 rotate-45 border-4 border-rose-600"></div>
-              <div className="absolute w-14 h-14 -rotate-45 border-4 border-rose-600"></div>
+              <div className="absolute w-14 h-14 flex items-center justify-center bg-gold/20 rounded-full border-4 border-gold">
+                <span className="text-xl font-bold text-gold">{milestone.id}</span>
+              </div>
               <div className="absolute -bottom-8 whitespace-nowrap text-xs md:text-sm font-bold text-white bg-black/50 px-2 py-1 rounded">
                 {milestone.title}
               </div>
