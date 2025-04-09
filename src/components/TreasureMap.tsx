@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Milestone } from "@/types/milestone";
 import MilestoneModal from "./MilestoneModal";
-import { Compass, Mountain, TreePine, PalmTree, Boat } from "lucide-react";
+import { Compass, Mountain, TreePine, Palmtree, Ship } from "lucide-react";
 
 interface TreasureMapProps {
   onMilestoneClick: () => void;
@@ -97,8 +97,8 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
         {/* Palm Trees */}
         <div className="absolute left-[30%] bottom-[25%]">
           <div className="flex space-x-2">
-            <PalmTree size={30} className="text-green-600" />
-            <PalmTree size={35} className="text-green-700" />
+            <Palmtree size={30} className="text-green-600" />
+            <Palmtree size={35} className="text-green-700" />
           </div>
         </div>
         
@@ -115,9 +115,9 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
           </svg>
         </div>
         
-        {/* Boat */}
+        {/* Ship/Boat */}
         <div className="absolute right-[15%] bottom-[28%] text-amber-800">
-          <Boat size={30} className="fill-amber-700" />
+          <Ship size={30} className="fill-amber-700" />
         </div>
         
         {/* Compass */}
