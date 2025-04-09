@@ -8,7 +8,7 @@ import NepalWindow from "@/components/NepalWindow";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { ChevronRight, Image, BookOpen, Play } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -32,60 +32,70 @@ const Index = () => {
         <>
           {showConfetti && <Confetti />}
           
-          {/* Hero Section */}
-          <div className="h-[80vh] relative bg-gradient-to-b from-slate-900 to-black flex flex-col items-center justify-center">
+          {/* Hero Section - more futuristic and minimal */}
+          <div className="h-[80vh] relative bg-gradient-to-b from-black to-gray-900 flex flex-col items-center justify-center overflow-hidden grid-overlay">
             <motion.div 
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center text-center p-6"
+              className="flex flex-col items-center text-center p-6 z-10"
             >
-              <h1 className="text-6xl md:text-7xl text-gold font-playfair mb-6 tracking-tighter">
+              <h1 className="text-6xl md:text-7xl text-white font-playfair mb-8 tracking-tight">
                 Our Journey Together
               </h1>
-              <p className="text-xl md:text-2xl mb-10 max-w-2xl font-light text-gray-300">
-                Follow the treasure map of our life milestones and memories
+              <p className="text-xl md:text-2xl mb-12 max-w-2xl font-light text-gray-300 tracking-wide">
+                Follow the timeline of our moments and memories
               </p>
               
-              <div className="flex flex-wrap gap-5 justify-center">
+              <div className="flex flex-wrap gap-6 justify-center">
                 <Button 
                   onClick={() => navigate("/gallery")}
-                  className="bg-gold hover:bg-amber-400 text-black px-8 py-6 text-lg rounded-full transition-all hover:scale-105"
+                  className="btn-futuristic px-8 py-6 rounded-sm flex items-center gap-2"
                 >
-                  Photo Gallery
+                  <Image className="w-5 h-5" />
+                  <span className="text-lg">Gallery</span>
                 </Button>
                 <Button 
                   onClick={() => navigate("/videos")}
-                  className="bg-white hover:bg-rose text-black hover:text-white px-8 py-6 text-lg rounded-full transition-all hover:scale-105"
+                  className="btn-futuristic px-8 py-6 rounded-sm flex items-center gap-2"
                 >
-                  Watch Videos
+                  <Play className="w-5 h-5" />
+                  <span className="text-lg">Videos</span>
                 </Button>
                 <Button 
                   onClick={() => navigate("/blog")}
-                  className="bg-rose hover:bg-rose-light text-white px-8 py-6 text-lg rounded-full transition-all hover:scale-105"
+                  className="btn-futuristic px-8 py-6 rounded-sm flex items-center gap-2"
                 >
-                  Read Stories
+                  <BookOpen className="w-5 h-5" />
+                  <span className="text-lg">Stories</span>
                 </Button>
               </div>
             </motion.div>
+
+            {/* Futuristic background elements */}
+            <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-white opacity-10"></div>
+              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white opacity-10"></div>
+            </div>
           </div>
 
-          {/* Map Title Section */}
-          <div className="py-16 bg-black">
+          {/* Map Title Section - more minimal */}
+          <div className="py-20 bg-black">
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="container mx-auto text-center"
+              className="container mx-auto text-center px-4"
             >
-              <div className="flex items-center justify-center mb-4">
-                <div className="h-[1px] w-16 bg-gold"></div>
-                <Heart className="mx-4 text-rose fill-rose" />
-                <div className="h-[1px] w-16 bg-gold"></div>
+              <div className="flex items-center justify-center mb-6">
+                <div className="h-[1px] w-16 bg-white opacity-20"></div>
+                <div className="mx-4 w-2 h-2 bg-gold"></div>
+                <div className="h-[1px] w-16 bg-white opacity-20"></div>
               </div>
-              <h2 className="text-4xl md:text-5xl text-gold font-playfair mb-4">Discover Our Story</h2>
-              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-                Explore the map below to see the milestones that have shaped our journey together
+              <h2 className="text-4xl md:text-5xl text-white font-playfair mb-6 tracking-tight">Discover Our Story</h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
+                Explore the interactive map below to witness the moments that have defined our journey
               </p>
             </motion.div>
           </div>
@@ -93,7 +103,7 @@ const Index = () => {
           {/* Treasure Map Section */}
           <div className="flex-1 w-full max-w-6xl mx-auto px-4 py-8 bg-black">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
             >
