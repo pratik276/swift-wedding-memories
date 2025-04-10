@@ -1,8 +1,9 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Milestone } from "@/types/milestone";
 import MilestoneModal from "./MilestoneModal";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Compass, Mountain, TreePine, Palmtree, Ship } from "lucide-react";
 
 interface TreasureMapProps {
@@ -11,6 +12,7 @@ interface TreasureMapProps {
 
 const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
   const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
+  const isMobile = useIsMobile();
 
   // Sample milestones data - replace with your actual milestones
   const milestones: Milestone[] = [
@@ -56,6 +58,36 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
     }
   ];
 
+  // Calculate path points dynamically based on milestone positions
+  const calculatePathPoints = () => {
+    if (milestones.length <= 1) return "";
+    
+    // Sort milestones by ID to ensure correct path order
+    const sortedMilestones = [...milestones].sort((a, b) => a.id - b.id);
+    
+    // Start with the first milestone position
+    let pathData = `M${sortedMilestones[0].position.x},${sortedMilestones[0].position.y}`;
+    
+    // For each subsequent milestone, create a smooth curve to it
+    for (let i = 0; i < sortedMilestones.length - 1; i++) {
+      const current = sortedMilestones[i];
+      const next = sortedMilestones[i + 1];
+      
+      // Calculate control points for a smooth curve
+      const controlX1 = (current.position.x + next.position.x) / 2;
+      const controlY1 = current.position.y;
+      const controlX2 = (current.position.x + next.position.x) / 2;
+      const controlY2 = next.position.y;
+      
+      // Add the curve to the path data
+      pathData += ` C${controlX1},${controlY1} ${controlX2},${controlY2} ${next.position.x},${next.position.y}`;
+    }
+    
+    return pathData;
+  };
+
+  const pathData = calculatePathPoints();
+
   const handleOpenMilestone = (milestone: Milestone) => {
     setSelectedMilestone(milestone);
     onMilestoneClick();
@@ -63,6 +95,49 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
 
   const handleCloseMilestone = () => {
     setSelectedMilestone(null);
+  };
+  
+  // Generate milestone layout - auto-adjusting for mobile/desktop
+  const renderMilestones = () => {
+    return milestones.map((milestone) => {
+      // Different styles for the wedding milestone
+      const isSpecialMilestone = milestone.id === 5;
+      
+      return (
+        <motion.div 
+          key={milestone.id}
+          className="absolute cursor-pointer"
+          style={{ 
+            left: `${milestone.position.x}%`, 
+            top: `${milestone.position.y}%` 
+          }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5, delay: milestone.id * 0.2 }}
+          whileHover={{ scale: 1.2 }}
+          onClick={() => handleOpenMilestone(milestone)}
+        >
+          {isSpecialMilestone ? (
+            // Special marker for the wedding milestone
+            <div className="w-14 h-14 flex items-center justify-center relative">
+              <div className="absolute w-14 h-14 flex items-center justify-center bg-gold/20 rounded-full border-4 border-gold">
+                <span className="text-xl font-bold text-gold">{milestone.id}</span>
+              </div>
+              <div className="absolute -bottom-8 whitespace-nowrap text-xs md:text-sm font-bold text-white bg-black/50 px-2 py-1 rounded">
+                {milestone.title}
+              </div>
+            </div>
+          ) : (
+            <div className="w-12 h-12 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-800 rounded-full flex items-center justify-center text-amber-900 font-bold relative drop-shadow-lg">
+              {milestone.id}
+              <div className="absolute -bottom-8 whitespace-nowrap text-xs md:text-sm font-bold text-white bg-black/50 px-2 py-1 rounded">
+                {milestone.title}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      );
+    });
   };
 
   return (
@@ -126,10 +201,10 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
         </div>
       </div>
       
-      {/* Decorative Path Between Milestones */}
+      {/* Dynamically Generated Path Between Milestones */}
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         <path 
-          d="M25,65 Q32,52 40,40 Q50,30 65,25 Q70,35 75,45 Q80,52 85,60" 
+          d={pathData}
           stroke="#D4AF37" 
           strokeWidth="1" 
           fill="none" 
@@ -139,40 +214,7 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
       </svg>
       
       {/* Milestones */}
-      {milestones.map((milestone) => (
-        <motion.div 
-          key={milestone.id}
-          className="absolute cursor-pointer"
-          style={{ 
-            left: `${milestone.position.x}%`, 
-            top: `${milestone.position.y}%` 
-          }}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: milestone.id * 0.2 }}
-          whileHover={{ scale: 1.2 }}
-          onClick={() => handleOpenMilestone(milestone)}
-        >
-          {milestone.id === 5 ? (
-            // Special marker for the wedding milestone (removed red box)
-            <div className="w-14 h-14 flex items-center justify-center relative">
-              <div className="absolute w-14 h-14 flex items-center justify-center bg-gold/20 rounded-full border-4 border-gold">
-                <span className="text-xl font-bold text-gold">{milestone.id}</span>
-              </div>
-              <div className="absolute -bottom-8 whitespace-nowrap text-xs md:text-sm font-bold text-white bg-black/50 px-2 py-1 rounded">
-                {milestone.title}
-              </div>
-            </div>
-          ) : (
-            <div className="w-12 h-12 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-800 rounded-full flex items-center justify-center text-amber-900 font-bold relative drop-shadow-lg">
-              {milestone.id}
-              <div className="absolute -bottom-8 whitespace-nowrap text-xs md:text-sm font-bold text-white bg-black/50 px-2 py-1 rounded">
-                {milestone.title}
-              </div>
-            </div>
-          )}
-        </motion.div>
-      ))}
+      {renderMilestones()}
 
       {/* Milestone Modal */}
       {selectedMilestone && (
