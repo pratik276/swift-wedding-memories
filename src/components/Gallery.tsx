@@ -1,17 +1,24 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { createPath } from '@/utils/paths';
 
 // Define the gallery image data
 const galleryImages = [
-  { id: 1, thumbnail: '/images/thumbnails/wedding1-thumb.jpg', full: '/images/wedding1-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 2, thumbnail: '/images/thumbnails/wedding2-thumb.jpg', full: '/images/wedding2-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 3, thumbnail: '/images/thumbnails/wedding3-thumb.jpg', full: '/images/wedding3-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 4, thumbnail: '/images/thumbnails/wedding4-thumb.jpg', full: '/images/wedding4-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 5, thumbnail: '/images/thumbnails/wedding5-thumb.jpg', full: '/images/wedding5-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 6, thumbnail: '/images/thumbnails/wedding6-thumb.jpg', full: '/images/wedding6-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 7, thumbnail: '/images/thumbnails/wedding7-thumb.jpg', full: '/images/wedding7-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
-  { id: 8, thumbnail: '/images/thumbnails/wedding8-thumb.jpg', full: '/images/wedding8-compressed.jpg', alt: 'Pratik & Ashma Wedding Photo' },
+  { id: 1, src: createPath('/images/optimized/wedding1.jpg'), alt: 'Pratik & Ashma Wedding Photo 1' },
+  { id: 2, src: createPath('/images/optimized/wedding2.jpg'), alt: 'Pratik & Ashma Wedding Photo 2' },
+  { id: 3, src: createPath('/images/optimized/wedding3.jpg'), alt: 'Pratik & Ashma Wedding Photo 3' },
+  { id: 4, src: createPath('/images/optimized/wedding4.jpg'), alt: 'Pratik & Ashma Wedding Photo 4' },
+  { id: 5, src: createPath('/images/optimized/wedding5.jpg'), alt: 'Pratik & Ashma Wedding Photo 5' },
+  { id: 6, src: createPath('/images/optimized/wedding6.jpg'), alt: 'Pratik & Ashma Wedding Photo 6' },
+  { id: 7, src: createPath('/images/optimized/wedding7.jpg'), alt: 'Pratik & Ashma Wedding Photo 7' },
+  { id: 8, src: createPath('/images/optimized/wedding8.jpg'), alt: 'Pratik & Ashma Wedding Photo 8' },
+  { id: 9, src: createPath('/images/optimized/wedding9.jpg'), alt: 'Pratik & Ashma Wedding Photo 9' },
+  { id: 10, src: createPath('/images/optimized/wedding10.jpg'), alt: 'Pratik & Ashma Wedding Photo 10' },
+  { id: 11, src: createPath('/images/optimized/wedding11.jpg'), alt: 'Pratik & Ashma Wedding Photo 11' },
+  { id: 12, src: createPath('/images/optimized/wedding12.jpg'), alt: 'Pratik & Ashma Wedding Photo 12' },
+  { id: 13, src: createPath('/images/optimized/wedding13.jpg'), alt: 'Pratik & Ashma Wedding Photo 13' },
+  { id: 14, src: createPath('/images/optimized/wedding14.jpg'), alt: 'Pratik & Ashma Wedding Photo 14' },
+  { id: 15, src: createPath('/images/optimized/wedding15.jpg'), alt: 'Pratik & Ashma Wedding Photo 15' },
 ];
 
 // Image Placeholder component
@@ -34,7 +41,7 @@ const Gallery = () => {
             const id = Number(entry.target.getAttribute('data-id'));
             if (id && !loadedImages[id]) {
               const img = entry.target as HTMLImageElement;
-              img.src = galleryImages.find(image => image.id === id)?.full || '';
+              img.src = galleryImages.find(image => image.id === id)?.src || '';
               img.onload = () => {
                 setLoadedImages(prev => ({ ...prev, [id]: true }));
               };
@@ -83,15 +90,14 @@ const Gallery = () => {
                   if (el) imageRefs.current.set(image.id, el);
                 }}
                 data-id={image.id}
-                src={image.thumbnail} // Start with thumbnail
-                data-src={image.full} // Full image will be loaded by intersection observer
+                src={image.src} // Start with thumbnail
                 alt={image.alt}
                 className={cn(
                   "w-full h-64 object-cover rounded-lg gallery-image cursor-pointer",
                   !loadedImages[image.id] && "opacity-0 absolute",
                   loadedImages[image.id] && "opacity-100"
                 )}
-                onClick={() => handleImageClick(image.full)}
+                onClick={() => handleImageClick(image.src)}
               />
             </div>
           ))}
