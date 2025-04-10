@@ -28,6 +28,12 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   
+  const handleNavigateToMap = () => {
+    // Set localStorage flag when navigating back to map
+    localStorage.setItem('hasEnteredSite', 'true');
+    navigate('/');
+  };
+
   // Handle image click to show full size
   const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -44,7 +50,7 @@ const Gallery = () => {
         <div className="flex items-center mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate('/')}
+            onClick={handleNavigateToMap}
             className="text-white hover:bg-white/10"
           >
             <ChevronLeft size={20} className="mr-2" />

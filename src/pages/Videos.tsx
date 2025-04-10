@@ -34,13 +34,19 @@ const Videos = () => {
   const navigate = useNavigate();
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
+  const handleNavigateToMap = () => {
+    // Set localStorage flag when navigating back to map
+    localStorage.setItem('hasEnteredSite', 'true');
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-slate-900 to-slate-800">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate('/')}
+            onClick={handleNavigateToMap}
             className="text-white hover:bg-white/10"
           >
             <ChevronLeft size={20} className="mr-2" />

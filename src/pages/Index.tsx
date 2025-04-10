@@ -15,12 +15,22 @@ const Index = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showInitialScreen, setShowInitialScreen] = useState(true);
 
+  // Check localStorage on component mount to determine if window should be shown
+  useEffect(() => {
+    const hasEnteredSite = localStorage.getItem('hasEnteredSite');
+    if (hasEnteredSite === 'true') {
+      setShowInitialScreen(false);
+    }
+  }, []);
+
   const handleMilestoneClick = () => {
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
   };
 
   const handleEnterSite = () => {
+    // Save to localStorage that user has entered the site
+    localStorage.setItem('hasEnteredSite', 'true');
     setShowInitialScreen(false);
   };
 

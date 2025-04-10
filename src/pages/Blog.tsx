@@ -92,6 +92,12 @@ const Blog = () => {
   const [activePost, setActivePost] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
+  const handleNavigateToMap = () => {
+    // Set localStorage flag when navigating back to map
+    localStorage.setItem('hasEnteredSite', 'true');
+    navigate('/');
+  };
+
   const filteredPosts = activeCategory === "all" 
     ? blogPosts 
     : blogPosts.filter(post => post.category === activeCategory);
@@ -102,7 +108,7 @@ const Blog = () => {
         <div className="flex items-center mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate('/')}
+            onClick={handleNavigateToMap}
             className="text-white hover:bg-white/10"
           >
             <ChevronLeft size={20} className="mr-2" />
