@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script>
-      // Get the current path and base path
+      // Get the current path
       const path = window.location.pathname;
+      // Get the base path from the URL
       const basePath = window.location.pathname.split('/')[1] || '';
+      // Get the rest of the path
+      const restOfPath = path.split('/').slice(2).join('/');
       // Redirect to the index.html with the current path
-      window.location.href = `/${basePath}/index.html${path}`;
+      window.location.href = `/${basePath}/index.html${restOfPath ? '/' + restOfPath : ''}`;
     </script>
   </head>
   <body>
