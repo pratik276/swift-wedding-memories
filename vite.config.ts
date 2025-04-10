@@ -6,11 +6,7 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   // Base path configuration
-  // For custom domain in production, use '/'
-  // For local development, use '/'
-  // If you ever need to deploy to GitHub Pages without a custom domain,
-  // you would change this to '/repository-name/'
-  base: '/',
+  base: mode === 'production' ? '/swift-wedding-memories/' : '/',
   
   // Development server configuration
   server: {
