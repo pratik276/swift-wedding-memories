@@ -8,7 +8,7 @@
       // Get the current path
       const path = window.location.pathname;
       // Check if we're in development
-      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const isDevelopment = process.env.NODE_ENV === 'development';
       // Get the base path
       const basePath = isDevelopment ? '' : 'swift-wedding-memories';
       // Get the rest of the path

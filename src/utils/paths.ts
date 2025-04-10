@@ -4,7 +4,7 @@ export const getBasePath = () => {
     const path = window.location.pathname;
     const parts = path.split('/');
     // In development, return empty string
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    if (process.env.NODE_ENV === 'development') {
       return '';
     }
     return parts[1] || 'swift-wedding-memories';
