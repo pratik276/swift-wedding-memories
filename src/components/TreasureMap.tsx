@@ -128,18 +128,12 @@ const TreasureMap = ({ onMilestoneClick }: TreasureMapProps) => {
       
       {/* Decorative Path Between Milestones */}
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#D4AF37" />
-          </marker>
-        </defs>
         <path 
           d="M25,65 Q32,52 40,40 Q50,30 65,25 Q70,35 75,45 Q80,52 85,60" 
           stroke="#D4AF37" 
           strokeWidth="1" 
           fill="none" 
           strokeDasharray="3"
-          markerEnd="url(#arrowhead)"
           className="drop-shadow-md"
         />
       </svg>
