@@ -5,31 +5,37 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Base path configuration
+  // For custom domain in production, use '/'
+  // For local development, use '/'
+  // If you ever need to deploy to GitHub Pages without a custom domain,
+  // you would change this to '/repository-name/'
+  base: '/',
+  
+  // Development server configuration
   server: {
-    host: true,
-    port: 8080,
-    strictPort: true,
+    host: "::", // Allows connections via IPv6
+    port: 8080, // Port for local development
+    strictPort: true, // Don't try other ports if 8080 is taken
   },
+  
+  // Plugins
   plugins: [
-    react(),
-    mode === 'development' &&
-    componentTagger(),
+    react(), // React support with SWC compiler
+    // Component tagger only enabled in development
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
-  base: process.env.NODE_ENV === 'production' ? '/swift-wedding-memories/' : '/',
+  
+  // Path aliases for cleaner imports
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  
+  // Build configuration
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        assetFileNames: 'assets/[name].[hash][extname]',
-        chunkFileNames: 'assets/[name].[hash].js',
-        entryFileNames: 'assets/[name].[hash].js',
-      },
-    },
+    outDir: 'dist', // Output directory
+    sourcemap: mode === 'development', // Generate sourcemaps in development
   },
 }));
