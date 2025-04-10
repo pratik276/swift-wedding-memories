@@ -3,9 +3,13 @@ export const getBasePath = () => {
   if (typeof window !== 'undefined') {
     const path = window.location.pathname;
     const parts = path.split('/');
-    return parts[1] || '';
+    // In development, return empty string
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return '';
+    }
+    return parts[1] || 'swift-wedding-memories';
   }
-  return 'swift-wedding-memories';
+  return '';
 };
 
 // Create a path with the base path
@@ -13,7 +17,7 @@ export const createPath = (path: string) => {
   const basePath = getBasePath();
   // Remove leading slash if present
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  return `/${basePath}/${cleanPath}`;
+  return basePath ? `/${basePath}/${cleanPath}` : `/${cleanPath}`;
 };
 
 // Get the full URL with the base path
@@ -23,7 +27,7 @@ export const getFullUrl = (path: string) => {
     const baseUrl = window.location.origin;
     // Remove leading slash if present
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-    return `${baseUrl}/${basePath}/${cleanPath}`;
+    return basePath ? `${baseUrl}/${basePath}/${cleanPath}` : `${baseUrl}/${cleanPath}`;
   }
   return path;
 }; 

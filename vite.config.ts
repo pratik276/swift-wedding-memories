@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
-  base: '/swift-wedding-memories/',
+  base: mode === 'development' ? '/' : '/swift-wedding-memories/',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

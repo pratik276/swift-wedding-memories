@@ -7,12 +7,16 @@
     <script>
       // Get the current path
       const path = window.location.pathname;
+      // Check if we're in development
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       // Get the base path
-      const basePath = 'swift-wedding-memories';
+      const basePath = isDevelopment ? '' : 'swift-wedding-memories';
       // Get the rest of the path
-      const restOfPath = path.split('/').slice(2).join('/');
+      const restOfPath = path.split('/').slice(isDevelopment ? 1 : 2).join('/');
       // Redirect to the index.html with the current path
-      window.location.href = `/${basePath}/index.html${restOfPath ? '/' + restOfPath : ''}`;
+      window.location.href = isDevelopment 
+        ? `/index.html${restOfPath ? '/' + restOfPath : ''}`
+        : `/${basePath}/index.html${restOfPath ? '/' + restOfPath : ''}`;
     </script>
   </head>
   <body>
